@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/WATonomous/wato_eve_labels/metadata/schema/vector_gt.schema.json",
+  "title": "Eve vector ground-truth frame",
+  "description": "One line of vector_gt/vector_gt.jsonl: lane-level map elements projected into the ego frame for a single recorded frame. Coordinates are metres in the ego frame (x forward, y left, origin = lidar_cc).",
+  "type": "object",
+  "required": [
+    "id",
+    "session",
+    "utm",
+    "yaw",
+    "lanes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Frame id. Matches the stem of the frame/mask npz in the training dataset (e.g. oldbag__dataset_live__sample_0001)."
+    },
+    "session": {
+      "type": "string",
+      "description": "Recording session this frame came from. Splits are by session, never by time."
+    },
+    "utm": {
+      "type": "array",
+      "description": "Ego position in UTM zone 17N (EPSG:32617), metres.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "yaw": {
+      "type": "number",
+      "description": "Ego heading in radians (UTM frame), used to rotate UTM geometry into the ego frame."
+    },
+    "lanes": {
+      "type": "array",
+      "description": "Lanelets whose centreline passes within the patch clip radius.",
+      "items": {
+        "$ref": "#/definitions/lane"
+      }
+    },
+    "stop_lines": {
+      "type": "array",
+      "description": "Stop line polylines within the patch.",
+      "items": {
+        "$ref": "#/definitions/polyline"
+      }
+    },
+    "crosswalks": {
+      "type": "array",
+      "description": "Crosswalk geometry within the patch (way polylines or crosswalk lanelet boundaries).",
+      "items": {
+        "$ref": "#/definitions/polyline"
+      }
+    }
+  },
+  "definitions": {
+    "point": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "polyline": {
+      "type": "object",
+      "required": [
+        "id",
+        "points"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "OSM way id from the source map."
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/point"
+          },
+          "minItems": 2
+        }
+      }
+    },
+    "lane": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "centerline",
+        "left_boundary",
+        "right_boundary",
+        "left_type",
+        "left_colour",
+        "right_type",
+        "right_colour"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "OSM relation id from the source map."
+        },
+        "type": {
+          "type": "string",
+          "description": "Lanelet subtype from the map: road | crosswalk | other."
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "e.g. urban"
+        },
+        "one_way": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "e.g. yes"
+        },
+        "centerline": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/point"
+          },
+          "minItems": 2
+        },
+        "left_boundary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/point"
+          },
+          "description": "Boundary polyline. MAY BE EMPTY OR A SINGLE POINT where the patch clip cut the boundary; centrelines are always >= 2 points."
+        },
+        "right_boundary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/point"
+          },
+          "description": "Boundary polyline. MAY BE EMPTY OR A SINGLE POINT where the patch clip cut the boundary; centrelines are always >= 2 points."
+        },
+        "left_type": {
+          "$ref": "#/definitions/boundary_type"
+        },
+        "right_type": {
+          "$ref": "#/definitions/boundary_type"
+        },
+        "left_colour": {
+          "$ref": "#/definitions/boundary_colour"
+        },
+        "right_colour": {
+          "$ref": "#/definitions/boundary_colour"
+        },
+        "speed_limit_mps": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "turn": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "turn_direction tag if present"
+        },
+        "predecessors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Geometrically chained (2 m, 35 deg), not from a routing graph."
+        },
+        "successors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "boundary_type": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "0=dashed 1=solid 2=solid_solid 3=road_edge. DERIVED from adjacency + direction, not from paint tags (see dataset.json boundary.derivation)."
+    },
+    "boundary_colour": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "0=white 1=yellow. DERIVED: opposite-direction neighbours -> yellow."
+    }
+  }
+}

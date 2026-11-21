@@ -1,0 +1,240 @@
+{
+  "$schema": "../metadata/schema/vector_gt.schema.json",
+  "name": "wato_eve_labels",
+  "version": "0.1.0",
+  "generated": "run scripts/make_metadata.py",
+  "purpose": "Vectorised map ground truth for lane/map perception on WATonomous Eve recordings, derived from Lanelet2 maps. Shared so dataset work can be distributed without duplicating conversion effort.",
+  "frames_file": "vector_gt/vector_gt.jsonl",
+  "frame_schema": "metadata/schema/vector_gt.schema.json",
+  "frames_manifest": "metadata/frames_manifest.json",
+  "frame_records_validated_against_schema": true,
+  "coordinate_frames": {
+    "ego": {
+      "axes": "x forward, y left",
+      "origin": "lidar_cc",
+      "units": "metres",
+      "note": "same frame the BEV map head and the planner use"
+    },
+    "world": {
+      "crs": "UTM zone 17N, WGS84",
+      "epsg": 32617,
+      "units": "metres"
+    },
+    "transform": "p_ego = R(-yaw) * (p_utm - ego_utm), yaw from the frame record"
+  },
+  "patch": {
+    "clip_radius_m": 70.0,
+    "note": "only geometry within 70 m of the ego position is kept; polylines are clipped at the patch edge, not truncated to their first point"
+  },
+  "raster_grid": {
+    "size": [
+      200,
+      200
+    ],
+    "resolution_m": 0.5,
+    "extent_m": 100,
+    "rows": "+y",
+    "cols": "+x",
+    "flip_y": false,
+    "note": "used by masks/ and by the segmentation head; see scripts/lanelet_rasterize.py"
+  },
+  "classes": {
+    "vector": {
+      "lane_type": {
+        "road": 5806,
+        "crosswalk": 687
+      }
+    },
+    "raster": [
+      "drivable_area",
+      "ped_crossing",
+      "walkway",
+      "stop_line",
+      "carpark_area",
+      "divider"
+    ],
+    "supervised": [
+      "drivable_area",
+      "ped_crossing",
+      "divider",
+      "stop_line"
+    ],
+    "note": "walkway and carpark_area are not present in these maps and get zero class weight; the six-channel head contract is unchanged"
+  },
+  "boundary": {
+    "type": {
+      "0": "dashed",
+      "1": "solid",
+      "2": "solid_solid",
+      "3": "road_edge"
+    },
+    "colour": {
+      "0": "white",
+      "1": "yellow"
+    },
+    "derived": true,
+    "derivation": {
+      "shared_by_opposite_direction_lanelets": "solid, yellow",
+      "shared_by_same_direction_lanelets": "dashed, white",
+      "same_direction_with_lane_change=no": "solid, white",
+      "boundary_of_a_single_lanelet": "road_edge, white"
+    },
+    "caveat": "the source maps carry no paint tags (roads_around_campus.osm says left_marking/right_marking = none), so dash/solid and white/yellow are geometric inferences, not observed paint",
+    "observed_counts": {
+      "type": {
+        "dashed": 4964,
+        "road_edge": 7808,
+        "solid": 214
+      },
+      "colour": {
+        "white": 12879,
+        "yellow": 107
+      }
+    }
+  },
+  "topology": {
+    "method": "geometric chaining: end->start within 2 m and heading within 35 deg",
+    "successor_edges": 2820,
+    "note": "OSM Lanelet2 does not store successors; this is an approximation, so treat it as a training target, not routing ground truth"
+  },
+  "splits": {
+    "train": [
+      "oldbag",
+      "test3"
+    ],
+    "val": [
+      "test5"
+    ],
+    "unused": [
+      "test2"
+    ],
+    "rule": "split by recording session, never by time: the ring road is a loop, so a time split leaks the same geometry into train and val"
+  },
+  "sessions": {
+    "oldbag": {
+      "frames": 181,
+      "source": "earlier ring-road recording, frames extracted to dataset_live",
+      "split": "train",
+      "notes": "the original ring-road drive used for the first fine-tune",
+      "lanes_total": 1560,
+      "lanes_per_frame": 8.6,
+      "lane_km": 70.62,
+      "stop_lines_total": 134,
+      "crosswalks_total": 403,
+      "utm_extent_m": [
+        824,
+        668
+      ],
+      "utm_centre": [
+        536895,
+        4813071
+      ]
+    },
+    "test2": {
+      "frames": 4,
+      "source": "may_30_ring_road_test_2 (Drive bags folder 1293dKJLuDN4_5KQgk3ToORRmp8fOuODu)",
+      "split": "unused",
+      "notes": "only 4 frames survived the coverage filter",
+      "lanes_total": 47,
+      "lanes_per_frame": 11.8,
+      "lane_km": 1.56,
+      "stop_lines_total": 9,
+      "crosswalks_total": 18,
+      "utm_extent_m": [
+        38,
+        95
+      ],
+      "utm_centre": [
+        537028,
+        4813539
+      ]
+    },
+    "test3": {
+      "frames": 138,
+      "source": "may_30_ring_road_test_3 (same Drive folder)",
+      "split": "train",
+      "notes": "second ring-road session, May 30 2026",
+      "lanes_total": 1266,
+      "lanes_per_frame": 9.2,
+      "lane_km": 55.53,
+      "stop_lines_total": 124,
+      "crosswalks_total": 352,
+      "utm_extent_m": [
+        823,
+        944
+      ],
+      "utm_centre": [
+        536936,
+        4813222
+      ]
+    },
+    "test5": {
+      "frames": 233,
+      "source": "may_30_ring_road_test_5 (same Drive folder)",
+      "split": "val",
+      "notes": "held out; different session so there is no time leakage",
+      "lanes_total": 3620,
+      "lanes_per_frame": 15.5,
+      "lane_km": 126.01,
+      "stop_lines_total": 146,
+      "crosswalks_total": 636,
+      "utm_extent_m": [
+        991,
+        1173
+      ],
+      "utm_centre": [
+        536994,
+        4813361
+      ]
+    }
+  },
+  "counts": {
+    "frames": 556,
+    "lanes": 6493,
+    "stop_lines": 413,
+    "crosswalks": 1409,
+    "lane_km": 253.7
+  },
+  "contents": {
+    "vector_gt/vector_gt.jsonl": "the vector ground truth, one JSON object per frame",
+    "masks/": "raster ground truth (4 supervised channels + valid), one npz per frame, regenerated by scripts/assemble_dataset.py",
+    "calib/": "per-source camera/LiDAR calibration npz used when the frames were extracted",
+    "maps/": "Lanelet2 maps the labels were derived from",
+    "scripts/": "the pipeline that produced all of the above",
+    "metadata/frames_manifest.json": "per-frame pose/coverage record from the extractor"
+  },
+  "scripts": {
+    "stream_extract.py": "bag -> frames: rclone HTTP-range streaming, one frame per 20 m of travel above 2 m/s; writes 6 camera JPEGs + LiDAR points + calib",
+    "lanelet_rasterize.py": "Lanelet2 -> BEV raster (4 classes + valid) on the 200x200 @0.5 m grid",
+    "assemble_dataset.py": "frames -> masks/manifest, applies the coverage filter (>=10%)",
+    "export_vector_gt.py": "frames -> vector_gt.jsonl: lanes/boundaries/topology in ego frame",
+    "vector_targets.py": "vector GT -> fixed-size training targets (K=20 points, clipped)",
+    "make_metadata.py": "regenerates this file from the data"
+  },
+  "quality": {
+    "lanes": 6493,
+    "right_boundary_degenerate": 651,
+    "left_boundary_degenerate": 643,
+    "note": "boundaries can degenerate to 0-1 points where the 70 m patch clip cut them; centrelines never do. Training targets use the centreline, so this does not affect the vector model's targets, but a boundary-predicting head should filter these."
+  },
+  "caveats": [
+    "paint attributes (dash/solid, white/yellow) are derived from lane adjacency, not observed",
+    "divider labels come from lanelet geometry, which can sit ~10-30 cm off the painted line",
+    "topology is geometrically chained, not a routing graph",
+    "frames themselves (~2.4 MB each, 1.5 GB total) are not in this repo; only the labels are",
+    "sessions were recorded in daylight on the ring road; no night/rain coverage yet"
+  ],
+  "file_checksums": {
+    "maps/ring_road_current.osm": "ad888c4c194f6d31dd4a1ad16a9d890beb64a6018242c18282816f184523b950",
+    "maps/roads_around_campus.osm": "ed43f8e7361ed5a753b4dc4bfa22bf0f88fb13074192af6bae2f3e18386acc2f",
+    "metadata/frames_manifest.json": "8def8200a7aa10ea9e1a22cb7f3fbfd8592a1e0b8a380512a42f582f877fac22",
+    "metadata/schema/vector_gt.schema.json": "d68a356c85370a4648b127d6fc326446e372feaaca78f0baf5e62955edb4427c",
+    "scripts/assemble_dataset.py": "fc24dbb63cffcf8952d9f159215924644d501558765cdc4dc543631cf959fe0e",
+    "scripts/export_vector_gt.py": "0de1c8f1ccd50ef2009e5ae3d29fb32c3d17fbc3589daa4796bb1f167697b6c8",
+    "scripts/lanelet_rasterize.py": "5c6c12d307ff9795db1c25567a6806c9678d3b794274abf926f64765b23fd11d",
+    "scripts/make_metadata.py": "421497d2473532d84eb106f5164f567c9900e4340dd0a298fa8a18df55160934",
+    "scripts/stream_extract.py": "adb416fe0cc6c96a033ecaa2b1ec775ec8404001de1bda7a9cbf5bd465c1c4c6",
+    "scripts/vector_targets.py": "1201a70e7ee0f6d596849642c40b289b25d424eb3fbe5e55a7154688af445b6d",
+    "vector_gt/vector_gt.jsonl": "138e7bf257951d4b4c9138c0f0712012b7b1ef6f3006141eb8bab26c30b47b78"
+  }
+}

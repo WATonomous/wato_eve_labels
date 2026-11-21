@@ -1,0 +1,5 @@
+# frames themselves (1.5 GB) are not stored in this repo
+frames/
+*.jpg
+*.pth
+__pycache__/
