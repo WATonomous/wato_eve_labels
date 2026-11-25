@@ -88,9 +88,24 @@ is imported by both steps 2 and 3.
 Total: **556 frames, 6 493 lanes, 253.7 lane-km**, 2.53 crosswalks/frame,
 0.74 stop lines/frame.
 
-In progress (not in this repo yet): 9 further recordings from the Drive bags
-folder — only 2 are on the ring road (4 files, ~30 frames pass the coverage
-filter); 4 are at the test track and 2–3 elsewhere, outside the mapped area.
+A second wave, recorded **2026-11-24 with the new VLS-128 LiDAR**, is included
+for the frames that fall inside the map:
+
+| session | source | frames | split |
+|---|---|---|---|
+| `vls24_kingst` | `2026 November 24 (VLS-128 Uncalibrated)/king st run` | 13 | unassigned |
+| `vls24_ringday` | `.../ring road run` | 9 | unassigned |
+
+22 of 43 candidate frames passed the coverage filter; the rest left the mapped
+area. The VLS-128 turns out to have **uncalibrated reflectivity**, so paint is
+not separable from asphalt in the intensity channel — see
+[`docs/vls128-2026-11-24.md`](docs/vls128-2026-11-24.md) before planning any
+lane extraction from the point cloud. A night session
+(`vls24_ringnight`) is recorded but not labelled yet.
+
+Earlier, still unlabelled: 9 further recordings from the Drive bags folder —
+only 2 are on the ring road (4 files, ~30 frames pass the coverage filter);
+4 are at the test track and 2–3 elsewhere, outside the mapped area.
 
 **Splits are by recording session, never by time.** The ring road is a loop, so a
 time split leaks the same geometry into train and val.
@@ -121,7 +136,13 @@ below. If you change the data, re-run it — do not edit it by hand.
 4. **Topology is geometrically chained** (end→start within 2 m and 35°), not a
    routing graph. Treat it as a training signal, not routing truth.
 5. **Daylight, dry ring-road only.** No night/rain session yet — that is the
-   biggest known gap for deployment.
+   biggest known gap for deployment. (`vls24_ringnight` is recorded but not yet
+   labelled.)
+6. **The VLS-128 intensity channel is uncalibrated.** On the 2026-11-24
+   sessions, white paint measures the same intensity as asphalt
+   (p50 22 vs 23), so "bright and near the ground" finds verges, not lane
+   markings. Geometry and camera calibration are correct; it is specifically
+   reflectivity that is not calibrated.
 
 ## Contributing a new session
 
