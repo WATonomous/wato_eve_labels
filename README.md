@@ -97,10 +97,12 @@ for the frames that fall inside the map:
 | `vls24_ringday` | `.../ring road run` | 19 | unassigned |
 
 32 of 53 ingested frames passed the coverage filter; the rest left the mapped
-area. The VLS-128 turns out to have **uncalibrated reflectivity**, so paint is
-not separable from asphalt in the intensity channel — see
-[`docs/vls128-2026-11-24.md`](docs/vls128-2026-11-24.md) before planning any
-lane extraction from the point cloud. A night session
+area. Two things to know before planning lane extraction from the cloud: the
+concentric "lane lines" you see in a BEV of this sensor are the **beam-ring
+footprint** (spaced ~1.4 m, centred on the ego), and the reflectivity is
+**uncalibrated**, so intensity is only a weak paint signal (mean AUC 0.45 over
+44 frames, best 0.76). See
+[`docs/vls128-2026-11-24.md`](docs/vls128-2026-11-24.md). A night session
 (`vls24_ringnight`) is recorded but not labelled yet.
 
 Earlier, still unlabelled: 9 further recordings from the Drive bags folder —
