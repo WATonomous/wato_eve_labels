@@ -94,9 +94,9 @@ for the frames that fall inside the map:
 | session | source | frames | split |
 |---|---|---|---|
 | `vls24_kingst` | `2026 November 24 (VLS-128 Uncalibrated)/king st run` | 13 | unassigned |
-| `vls24_ringday` | `.../ring road run` | 9 | unassigned |
+| `vls24_ringday` | `.../ring road run` | 19 | unassigned |
 
-22 of 43 candidate frames passed the coverage filter; the rest left the mapped
+32 of 53 ingested frames passed the coverage filter; the rest left the mapped
 area. The VLS-128 turns out to have **uncalibrated reflectivity**, so paint is
 not separable from asphalt in the intensity channel — see
 [`docs/vls128-2026-11-24.md`](docs/vls128-2026-11-24.md) before planning any

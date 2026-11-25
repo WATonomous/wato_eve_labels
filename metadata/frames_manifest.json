@@ -12158,5 +12158,225 @@
     },
     "calib_path": "calib/vls24_ringday_f3.npz",
     "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0001",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0001.npz",
+    "utm": [
+      537307.6696907429,
+      4813111.541005867
+    ],
+    "yaw": 1.095128538511991,
+    "travelled_m": 40.39582546747393,
+    "speed_ms": 16.544701236221858,
+    "coverage": 0.693275,
+    "px": {
+      "drivable_area": 12064,
+      "ped_crossing": 0,
+      "divider": 1001,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0002",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0002.npz",
+    "utm": [
+      537324.847180007,
+      4813147.762870812
+    ],
+    "yaw": 1.1345072880791458,
+    "travelled_m": 80.48889855330292,
+    "speed_ms": 14.844006448178488,
+    "coverage": 0.69735,
+    "px": {
+      "drivable_area": 13033,
+      "ped_crossing": 111,
+      "divider": 959,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0003",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0003.npz",
+    "utm": [
+      537334.136354144,
+      4813187.818480695
+    ],
+    "yaw": 1.6826380142273563,
+    "travelled_m": 120.53738291115911,
+    "speed_ms": 8.443566403981864,
+    "coverage": 0.742175,
+    "px": {
+      "drivable_area": 13498,
+      "ped_crossing": 381,
+      "divider": 1057,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0004",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0004.npz",
+    "utm": [
+      537318.9992881997,
+      4813224.6696098065
+    ],
+    "yaw": 2.2609597907533177,
+    "travelled_m": 160.62335308893492,
+    "speed_ms": 11.897033450407903,
+    "coverage": 0.50965,
+    "px": {
+      "drivable_area": 8808,
+      "ped_crossing": 316,
+      "divider": 696,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0005",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0005.npz",
+    "utm": [
+      537288.5181260085,
+      4813250.483516806
+    ],
+    "yaw": 2.4505407608172103,
+    "travelled_m": 200.6331898741316,
+    "speed_ms": 15.539039025004351,
+    "coverage": 0.344475,
+    "px": {
+      "drivable_area": 4676,
+      "ped_crossing": 114,
+      "divider": 437,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0006",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0006.npz",
+    "utm": [
+      537257.0726592086,
+      4813275.303669708
+    ],
+    "yaw": 2.441756525921471,
+    "travelled_m": 240.6955253624094,
+    "speed_ms": 9.969556021176778,
+    "coverage": 0.287975,
+    "px": {
+      "drivable_area": 4198,
+      "ped_crossing": 0,
+      "divider": 387,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f1__frame_0007",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f1__frame_0007.npz",
+    "utm": [
+      537226.4857174554,
+      4813301.202464724
+    ],
+    "yaw": 2.419447419216308,
+    "travelled_m": 280.77502334521364,
+    "speed_ms": 19.766174634788054,
+    "coverage": 0.2454,
+    "px": {
+      "drivable_area": 4084,
+      "ped_crossing": 0,
+      "divider": 379,
+      "stop_line": 0
+    },
+    "calib_path": "calib/vls24_ringday_f1.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f2__frame_0005",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f2__frame_0005.npz",
+    "utm": [
+      536843.841780052,
+      4813165.501429197
+    ],
+    "yaw": -1.234066446754118,
+    "travelled_m": 200.58341752219187,
+    "speed_ms": 10.269678258898715,
+    "coverage": 0.37705,
+    "px": {
+      "drivable_area": 5402,
+      "ped_crossing": 501,
+      "divider": 647,
+      "stop_line": 118
+    },
+    "calib_path": "calib/vls24_ringday_f2.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f2__frame_0006",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f2__frame_0006.npz",
+    "utm": [
+      536857.8821027031,
+      4813126.583106946
+    ],
+    "yaw": -1.2112915933294606,
+    "travelled_m": 240.67650843162218,
+    "speed_ms": 15.796077704306429,
+    "coverage": 0.279375,
+    "px": {
+      "drivable_area": 5031,
+      "ped_crossing": 476,
+      "divider": 724,
+      "stop_line": 112
+    },
+    "calib_path": "calib/vls24_ringday_f2.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
+  },
+  {
+    "id": "vls24_ringday__vls24_ringday_f2__frame_0007",
+    "session": "vls24_ringday",
+    "source_dir": "drive:2026 November 24 (VLS-128 Uncalibrated)/ring road run",
+    "frame_path": "frames/vls24_ringday__vls24_ringday_f2__frame_0007.npz",
+    "utm": [
+      536871.1562520299,
+      4813088.719678811
+    ],
+    "yaw": -1.241677584831643,
+    "travelled_m": 280.8052736294988,
+    "speed_ms": 15.101175668876495,
+    "coverage": 0.231475,
+    "px": {
+      "drivable_area": 4064,
+      "ped_crossing": 164,
+      "divider": 706,
+      "stop_line": 34
+    },
+    "calib_path": "calib/vls24_ringday_f2.npz",
+    "sensor": "VLS-128 (uncalibrated intensity), 8 pano cams, Nov 24 2026"
   }
 ]
