@@ -51,3 +51,17 @@ it is isolated as `envs/seg2d` on csc3 on purpose.
 - **Occlusion must be masked out.** Projecting the BEV mask straight into the
   camera paints "drivable" over the car in front; the per-cell
   residual-above-ground test in `stage2_labels.py` removes those cells.
+
+## Reproducing the BEVFusion comparison
+
+`eval_bevfusion_ablate.py` needs the BEVFusion environment (`envs/bf`), not the
+`seg2d` one. It produced the numbers in `../docs/results-2026-11-26.md`:
+
+```bash
+python eval_bevfusion_ablate.py --cfg CONFIG --ckpt epoch_22.pth \
+  --sessions kingst,ring --variants base,no_lidar,range_10,yaw_m50,z_m20
+```
+
+`../docs/img/stage2_labels_example.png` is a Stage 2 sanity check: green is
+drivable, blue walkway, and the hole in the car ahead is the occlusion test
+working.
