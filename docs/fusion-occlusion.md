@@ -53,6 +53,25 @@ The drop in "drivable" is not a regression, it is the margin rule refusing to
 commit where the four classes are close. The previous 0.231 included a lot of
 cells the model was guessing at.
 
+## Measured effect, all three clips (mean state fraction)
+
+| clip | drivable | walkway | crossing | occupied | unknown |
+|---|---|---|---|---|---|
+| clip_day | 0.143 | 0.078 | 0.000 | 0.060 | 0.719 |
+| clip_night | 0.202 | 0.001 | 0.034 | 0.059 | 0.704 |
+| clip_king | 0.180 | 0.053 | 0.000 | 0.070 | 0.698 |
+
+Night now puts crossing on the intersection (the GT has one there) instead of
+along the whole treeline, which was theearlier.
+
+## A bug this uncovered
+
+The clip calib files carried **8 extrinsics but only 6 names**, because csc2 was
+running an older extractor. Every BEV figure before this used only the six
+cameras it could name, silently ignoring `ee` and `ww`. Repaired in place (the
+extrinsics were present, only the name list was short) and the extractor fixed
+for future runs.
+
 ## What is still wrong
 
 The map is now *honest*, not *good*. Projecting a cell at 20 m into `CAM_FRONT`
