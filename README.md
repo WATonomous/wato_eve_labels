@@ -158,3 +158,20 @@ below. If you change the data, re-run it — do not edit it by hand.
    mean coverage is 0 %, the labels are empty and the session should not be added).
 
 Please don't re-export an existing session: check the table above first.
+
+## Models and tooling in this repo
+
+This repo is no longer only labels — it carries the map-perception work that
+consumes them.
+
+| path | what |
+|---|---|
+| `vector_gt/`, `masks/`, `metadata/` | the ground truth |
+| `scripts/` | label generation: `lanelet_rasterize.py`, `assemble_dataset.py`, `export_vector_gt.py`, `lane_from_lidar.py`, `data/add_classes.py` |
+| `map2d/` | 2D segmentation + LiDAR-DEM BEV pipeline (see `map2d/README.md`) |
+| `docs/plan-2d-bev.md` | plan and acceptance criteria for the current model |
+| `docs/results-2026-11-26.md` | all measured numbers: BEVFusion ablations, class parity, stage-1 |
+| `docs/vls128-2026-11-24.md` | the VLS-128 sessions and why the cloud cannot see paint |
+
+Branches: `vls128-nov24` (the Nov-24 sessions' labels) and `map2d-pipeline`
+(everything above, stacked on it).
