@@ -53,6 +53,19 @@ Free space must never contain an observed obstacle — computable on any frame
 with no GT at all. That is the metric a planner cares about, and it is immune to
 map error. Track it alongside IoU from now on.
 
+## Kerb detection status
+
+`map2d/kerb_detect.py` is written: it takes the world height grid, finds steps
+of 4-30 cm between two locally-flat surfaces, and thins to one cell per edge.
+Walls and buildings are excluded by the upper bound; noisy rough ground is
+excluded by the flat-both-sides test, which took the raw candidate count from
+86k to 9.6k cells.
+
+**It cannot be evaluated yet.** The only world map with correct poses is the 13
+night frames (6.8 % of cells observed), and at that sparsity the surface is too
+fragmented to trace kerb lines. Judging the detector on it would be judging the
+data. The ring-road relay is filling that in.
+
 ## Next
 
 1. Fix poses (re-extract, or stream odom only and patch the manifests by stamp).
