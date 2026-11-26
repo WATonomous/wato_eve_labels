@@ -126,14 +126,18 @@ def label_camera(mask, ground, c2e, K, W, H, downscale=1, max_range=45.0,
         if math.hypot(x, y) > max_range:
             continue
         # class: last non-empty BEV channel wins (they do not overlap in practice)
-        cls = -1
-        for ci, name in enumerate(BEV_CLASSES):
-            if name in BEV_TO_2D and mask[ci, r, c] > 0:
-                cls = CLASSES.index(BEV_TO_2D[name])
-        if cls < 0:
-            continue
-        if occ is not None and occ[r, c] > occ_max:
-            continue                      # occupied: vehicle, sign, parked car
+        if occupied:
+            # an object stands here: this is the only place the fine-tune gets
+            # negative (non-road) supervision, so label it instead of skipping
+            cls = CLASSES.index("other")
+        else:
+            cls = -1
+            for ci, name in enumerate(BEV_CLASSES):
+                if name in BEV_TO_2D and mask[ci, r, c] > 0:
+                    cls = CLASSES.index(BEV_TO_2D[name])
+            if cls < 0:
+                continue
+        occupied = occ is not None and occ[r, c] > occ_max
         z = float(sample(g, cell, extent, np.array([x]), np.array([y]))[0])
         if not np.isfinite(z):
             continue
@@ -190,7 +194,10 @@ def main():
         d = np.load(fpath, allow_pickle=True)
         cal = np.load(fpath.parent / "calib.npz", allow_pickle=True)
         mask = np.load(mp, allow_pickle=True)
-        mask_arr = np.stack([mask[c] for c in BEV_CLASSES])
+        # masks from the lanelet rasteriser only carry the four classes the map
+        # supports; walkway/carpark are optional additions
+        mask_arr = np.stack([mask[c] if c in mask else np.zeros((SIZE, SIZE), np.uint8)
+                             for c in BEV_CLASSES])
 
         pts = d["points"].astype(np.float64)
         l2e = cal["lidar2ego"].astype(np.float64)
