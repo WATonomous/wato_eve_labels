@@ -44,6 +44,7 @@ class ACDC(Dataset):
         self.size = size
         self.augment = augment
         self.items = []
+        missing = 0
         for cond in (conditions or CONDITIONS):
             gdir = self.root / "gt" / cond / split
             if not gdir.exists():
@@ -53,7 +54,14 @@ class ACDC(Dataset):
                 stem = lab.name.replace("_gt_labelIds.png", "")
                 img = self.root / "rgb_anon" / cond / split / seq / f"{stem}_rgb_anon.png"
                 inv = lab.with_name(lab.name.replace("_gt_labelIds.png", "_gt_invIds.png"))
+                # RGB and GT come from separate downloads; a partial RGB archive
+                # (we recovered 3 of 4 train conditions) must not crash training
+                if not img.exists():
+                    missing += 1
+                    continue
                 self.items.append((img, lab, inv, cond))
+            if missing:
+                print(f"  acdc {cond}/{split}: skipped {missing} GT entries with no RGB")
         if not self.items:
             raise RuntimeError(f"no ACDC samples under {self.root}")
         self.lut = np.full(256, CLASSES.index("other"), np.uint8)
